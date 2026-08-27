@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 logger = logging.getLogger("email")
 
-EMAIL_BASE_URL = "https://integrations.emergentagent.com"
+EMAIL_BASE_URL = ""
 EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY", "")
 EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "GoMerch Pro")
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
