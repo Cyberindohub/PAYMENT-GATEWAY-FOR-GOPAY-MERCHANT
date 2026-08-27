@@ -1,4 +1,32 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="GoMerch Pro Payment Gateway"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet"/><title>GoMerch Pro</title><script>window.addEventListener("error",function(e){e.error instanceof DOMException&&"DataCloneError"===e.error.name&&e.message&&e.message.includes("PerformanceServerTiming")&&(e.stopImmediatePropagation(),e.preventDefault())},!0)</script><script src="https://assets.emergent.sh/scripts/emergent-main.js"></script><script defer="defer" src="/static/js/main.a807ad6f.js"></script><link href="/static/css/main.ce976d26.css" rel="stylesheet"><style>div.mt-6.p-3.rounded-lg.bg-slate-50{display:none!important}</style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="GoMerch Pro Payment Gateway"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet"/><title>GoMerch Pro</title><script>window.addEventListener("error",function(e){e.error instanceof DOMException&&"DataCloneError"===e.error.name&&e.message&&e.message.includes("PerformanceServerTiming")&&(e.stopImmediatePropagation(),e.preventDefault())},!0)</script><script src="https://assets.emergent.sh/scripts/emergent-main.js"></script><script defer="defer" src="/static/js/main.a807ad6f.js"></script><link href="/static/css/main.ce976d26.css" rel="stylesheet"><style>
+div.mt-6.p-3.rounded-lg.bg-slate-50{display:none!important}
+/* hide Koneksi GoMerch Pro card (privacy) */
+h3:has(+ div.space-y-2) { /* fallback */ }
+</style>
+<style id="hide-gomerch-profile">
+/* Hide the right-hand Koneksi GoMerch Pro card on Developer page */
+.grid.grid-cols-1.lg\:grid-cols-2 > .p-6:nth-child(2) { display: none !important; }
+/* Also hide any heading that still says Koneksi GoMerch Pro */
+h3 { }
+</style>
+<script>
+// Extra safety: remove any element that still contains the text after React mounts
+document.addEventListener("DOMContentLoaded", function() {
+  const kill = () => {
+    document.querySelectorAll("h3").forEach(h => {
+      if (h.textContent && h.textContent.includes("Koneksi GoMerch Pro")) {
+        const card = h.closest(".p-6") || h.parentElement;
+        if (card) card.style.display = "none";
+      }
+    });
+  };
+  kill();
+  setTimeout(kill, 500);
+  setTimeout(kill, 1500);
+  setTimeout(kill, 3000);
+});
+</script>
+
 
 
 <script>
