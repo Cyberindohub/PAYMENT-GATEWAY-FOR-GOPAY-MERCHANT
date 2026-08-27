@@ -31,7 +31,6 @@ LANGKAH CEPAT
        Port            : 8001
        (aktifkan install requirements.txt)
    - Setelah jalan, buka terminal project lalu:
-       pip install emergentintegrations --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/
      lalu Restart project.
    - Uji: curl http://127.0.0.1:8001/api/branding   (harus keluar JSON)
 
