@@ -1,0 +1,92 @@
+========================================================================
+  GoMerch Pro — Paket Siap Jalan (aaPanel)
+  Domain: v1.x-api.asia
+========================================================================
+
+Isi paket:
+  backend/            -> kode FastAPI + file .env (sudah terisi)
+  frontend-build/     -> React SUDAH DI-BUILD (tidak perlu Node/yarn)
+  database/           -> dump database + restore.sh
+  nginx.conf.example  -> contoh reverse proxy Nginx
+  start-backend.sh    -> menjalankan backend via SSH (opsional)
+
+Yang HARUS Anda ganti sendiri di backend/.env:
+  - GOMERCH_TOKEN  -> token API GoMerch Pro Anda (diawali eyJ...)
+  (opsional) ADMIN_PASSWORD kalau ingin ganti password admin.
+
+------------------------------------------------------------------------
+LANGKAH CEPAT (5 langkah)
+------------------------------------------------------------------------
+
+1) UPLOAD & EKSTRAK
+   Ekstrak isi paket ke:  /www/wwwroot/v1.x-api.asia/
+   Sehingga menjadi:
+     /www/wwwroot/v1.x-api.asia/backend
+     /www/wwwroot/v1.x-api.asia/frontend-build
+     /www/wwwroot/v1.x-api.asia/database
+
+2) DATABASE (MongoDB)
+   - Di aaPanel > Databases > MongoDB, pastikan ada database:
+       nama: gomerch  |  user: gomerch  |  password: Cpns2019#
+     (kalau beda, sesuaikan MONGO_URL di backend/.env — ingat karakter '#'
+      ditulis %23 di dalam URL)
+   - Restore data bawaan (akun admin + merchant demo + pengaturan):
+       cd /www/wwwroot/v1.x-api.asia/database
+       bash restore.sh
+     (butuh mongorestore; sudah tersedia bila MongoDB dari aaPanel)
+
+3) BACKEND (Python Project Manager) — REKOMENDASI
+   - App Store > install "Python Project Manager"
+   - Version Manager > install Python 3.11
+   - Python Project > Add Project:
+       Path            : /www/wwwroot/v1.x-api.asia/backend
+       Python version  : 3.11
+       Mode/Framework  : uvicorn
+       Startup command : uvicorn server:app --host 0.0.0.0 --port 8001
+       Port            : 8001
+       (aktifkan install requirements.txt)
+   - Setelah jalan, buka terminal project lalu:
+       pip install emergentintegrations --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/
+     lalu Restart project.
+   - Uji: curl http://127.0.0.1:8001/api/branding   (harus keluar JSON)
+
+   (Alternatif SSH: jalankan  bash start-backend.sh  dari folder paket)
+
+4) WEBSITE + NGINX
+   - aaPanel > Website > Add site: v1.x-api.asia
+   - Settings > Config file: tempel isi nginx.conf.example
+     (root frontend sudah menunjuk ke .../frontend-build)
+   - Reload Nginx
+   - SSL: Website > SSL > Let's Encrypt > aktifkan + Force HTTPS  (WAJIB)
+
+5) SELESAI — buka https://v1.x-api.asia
+   Login admin:
+     email    : dedyph0203@gmail.com
+     password : GoMerch2026!   (atau sesuai ADMIN_PASSWORD di .env)
+   Saat login pertama, admin WAJIB setup 2FA:
+     scan QR dengan Google Authenticator lalu masukkan kode 6 digit.
+
+------------------------------------------------------------------------
+AKUN DEMO (sudah ada di database)
+------------------------------------------------------------------------
+  Merchant : merchant.demo@gomerch.pro  / GoMerch2026!
+  Staff    : admin.demo@gomerch.pro, finance.demo@gomerch.pro,
+             support.demo@gomerch.pro, risk.demo@gomerch.pro  (GoMerch2026!)
+
+------------------------------------------------------------------------
+CRON AUTO-SETTLEMENT T+1 (opsional)
+------------------------------------------------------------------------
+  aaPanel > Cron > Shell Script (harian 01:00):
+    curl -X POST https://v1.x-api.asia/api/cron/auto-settlement \
+      -H "Authorization: Bearer cronsec_7173a6a3140456511cbb0b95bee72c58bba16514bbd4c704"
+
+------------------------------------------------------------------------
+TROUBLESHOOTING
+------------------------------------------------------------------------
+  - uvicorn not found        : Python 3.11/venv belum aktif (pakai Python Project Manager)
+  - Mongo Authentication fail : ganti authSource=gomerch -> authSource=admin di MONGO_URL;
+                                pastikan '#' pada password ditulis %23
+  - Frontend blank / API error: paket ini sudah di-build untuk https://v1.x-api.asia.
+                                Jika domain berbeda, frontend harus di-build ulang.
+  - /api 404                  : cek blok location /api/ di Nginx & backend jalan di 8001
+========================================================================
