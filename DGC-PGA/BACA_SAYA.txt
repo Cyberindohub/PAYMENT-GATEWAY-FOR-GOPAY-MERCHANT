@@ -61,7 +61,7 @@ LANGKAH CEPAT (5 langkah)
 
 5) SELESAI — buka https://v1.x-api.asia
    Login admin:
-     email    : dedyph0203@gmail.com
+     email    : ubah di env
      password : GoMerch2026!   (atau sesuai ADMIN_PASSWORD di .env)
    Saat login pertama, admin WAJIB setup 2FA:
      scan QR dengan Google Authenticator lalu masukkan kode 6 digit.
