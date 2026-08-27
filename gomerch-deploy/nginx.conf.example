@@ -1,5 +1,5 @@
 # ==========================================================================
-# Contoh blok Nginx untuk situs v1.x-api.asia (aaPanel: Website > Settings > Config)
+# Contoh blok Nginx untuk situs domainmu (aaPanel: Website > Settings > Config)
 # Tempel bagian location di bawah ke dalam server { ... } situs Anda.
 # ==========================================================================
 
@@ -15,6 +15,6 @@ location /api/ {
 
 # React SPA -> file statis hasil build
 location / {
-    root /www/wwwroot/v1.x-api.asia/frontend-build;
+    root /www/wwwroot/domainmu/frontend-build;
     try_files $uri $uri/ /index.html;
 }
